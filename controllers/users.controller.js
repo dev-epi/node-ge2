@@ -41,7 +41,7 @@ const updateUser = (req, res) => {
         usersList[userIndex].name = req.body.name
         res.send({ message: 'USer updated successfully' })
     } else {
-        res.status(420).send('user not found')
+        res.status(420).send('user not found ')
     }
 }
 
