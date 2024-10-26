@@ -7,7 +7,6 @@ server.use(express.json())
 
 //3.traitements
 
-
 server.get('/' , (req , res)=>{
     res.send('Hello')
 })
