@@ -1,10 +1,6 @@
 const UserModel = require("../models/User.model")
 
-var usersList = [
-    { id: 1, name: 'Foulen' },
-    { id: 2, name: 'Mohamed' },
-    { id: 3, name: 'Rim' }
-]
+
 const createUser = (req, res) => {
     let user = new UserModel(req.body)
 
