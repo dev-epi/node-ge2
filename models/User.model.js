@@ -9,6 +9,7 @@ const schema = mongoose.Schema({
         name : String,
         path : String
     },
+   
     password : String
 })
 

@@ -34,26 +34,25 @@ const getUserById = async (req, res) => {
     }
 }
 
-const updateUser = (req, res) => {
+const updateUser = async(req, res) => {
     let id = req.params.id
-    let userIndex = usersList.findIndex(u => u.id == id)
-    if (userIndex != -1) {
-        usersList[userIndex].name = req.body.name
-        res.send({ message: 'USer updated successfully' })
-    } else {
-        res.status(420).send('user not found ')
+    try{
+       let result =await UserModel.updateOne({_id : id} ,req.body)
+       res.send(result)
+    }catch(err){
+        res.status(420).send(err)
     }
+
 }
 
 const removeUser = (req, res) => {
     let id = req.params.id
-    let userIndex = usersList.findIndex(u => u.id == id)
-    if (userIndex != -1) {
-        usersList.splice(userIndex, 1)
-        res.send({ message: 'USer deleted successfully' })
-    } else {
-        res.status(420).send('user not found')
-    }
+    UserModel.deleteOne({_id : id})
+    .then((result)=>{
+        res.send(result)
+    }).catch((err)=>{
+        res.status(420).send(err)
+    })
 }
 
 module.exports = { createUser, getAllUsers, getUserById, updateUser, removeUser }
