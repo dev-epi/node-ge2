@@ -14,7 +14,7 @@ const createUser = (req, res) => {
 
 }
 const getAllUsers = async (req, res) => {
-    let result = await UserModel.find()
+    let result = await UserModel.find().populate('skills')
     res.send(result)
 }
 
@@ -23,7 +23,7 @@ const getAllUsers = async (req, res) => {
 const getUserById = async (req, res) => {
     let id = req.params.x
     try {
-        let data = await UserModel.findOne({ _id: id })
+        let data = await UserModel.findOne({ _id: id }).populate('skills')
         res.send(data)
     } catch (err) {
         res.status(420).send(err)

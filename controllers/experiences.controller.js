@@ -17,6 +17,10 @@ const getAllExperiences = async (req, res) => {
     res.send(result)
 }
 
+const getUserExperiences = async (req, res) => {
+    let result = await ExperienceModel.find({user_id : req.params.id })
+    res.send(result)
+}
 
 
 const getExperienceById = async (req, res) => {

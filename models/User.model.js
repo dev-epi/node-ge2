@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const SkillModel = require('./Skill.model')
 
 const schema = mongoose.Schema({
     firstName : String,
@@ -10,7 +11,9 @@ const schema = mongoose.Schema({
         path : String
     },
    
-    password : String
+    password : String,
+    skills: [{type : mongoose.Schema.Types.ObjectId , ref : SkillModel}],
+    supervisorId : {type : mongoose.Schema.Types.ObjectId , ref : 'User'}
 })
 
 module.exports = mongoose.model('User' , schema)
