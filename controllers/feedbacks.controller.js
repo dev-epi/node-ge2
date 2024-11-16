@@ -11,7 +11,9 @@ const create = (req, res) => {
     })
 }
 const getAll = async (req, res) => {
-    let result = await FeedbackModel.find()
+    let result = await FeedbackModel
+    .find({user_id : req.params.user_id})
+    .populate({path : 'writer_id' , select:'firstName image'})
     res.send(result)
 }
 

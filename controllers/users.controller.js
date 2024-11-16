@@ -2,8 +2,11 @@ const UserModel = require("../models/User.model")
 
 
 const createUser = (req, res) => {
+    console.log(req.files)
     let user = new UserModel(req.body)
-
+    if(req.files && req.files.image){
+        user.image = req.files.image
+    }
 
     user.save().then(() => {
         res.send({ message: 'User added successfully' })
