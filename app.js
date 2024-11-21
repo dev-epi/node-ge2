@@ -1,12 +1,13 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const dotenv = require('dotenv')
+// const { verifyToken } = require('./middlewares/verifyToken.middleware')
 //2. initialisations
 const server = express()
 dotenv.config()
 //Activer la format JSON dans le body
 server.use(express.json())
-
+// server.use(verifyToken)
 mongoose.connect(process.env.DB)
 .then(()=>{
     console.log("MongoDB connected")

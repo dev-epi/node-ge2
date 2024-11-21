@@ -3,7 +3,7 @@ const FeedbackModel = require("../models/Feedback.model")
 
 const create = (req, res) => {
     let item = new FeedbackModel(req.body)
-
+    item.writer_id = req.user._id
     item.save().then(() => {
         res.send({ message: 'Added successfully' })
     }).catch((err) => {

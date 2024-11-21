@@ -1,5 +1,6 @@
 const UserModel = require("../models/User.model")
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 exports.register = (req, res) => {
 
     UserModel.findOne({ email: req.body.email })
@@ -44,8 +45,29 @@ exports.register2 = async (req, res) => {
     }
 }
 
-exports.login = (req, res) => {
+exports.login = async(req, res) => {
+    try{
+        let user = await UserModel.findOne({email : req.body.email})
+        if(!user){
+            res.status(422).send({ message: 'Invalid Credentials' }) 
+        }else{
+            let compare = await bcrypt.compare(req.body.password , user.password)
+            if(compare){
+                let token = await jwt.sign(
+                    {_id : user._id , email : user.email},
+                    process.env.SECRETKEY||'123'
 
+                )
+                res.send(token)
+
+            }else{
+                res.status(423).send({ message: 'Invalid Credentials' })   
+            }
+        }
+
+    }catch(err){
+        res.status(425).send(err)
+    }
 }
 
 

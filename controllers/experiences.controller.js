@@ -3,6 +3,8 @@ const ExperienceModel = require("../models/Experience.model")
 
 const createExperience = (req, res) => {
     let exp = new ExperienceModel(req.body)
+    
+    exp.user_id = req.user._id
 
     exp.save().then(() => {
         res.send({ message: 'Experience added successfully' })
@@ -44,14 +46,20 @@ const updateExperience = async(req, res) => {
 
 }
 
-const removeExperience = (req, res) => {
+const removeExperience = async(req, res) => {
     let id = req.params.id
-    ExperienceModel.deleteOne({_id : id})
-    .then((result)=>{
-        res.send(result)
-    }).catch((err)=>{
-        res.status(420).send(err)
-    })
+    let exp = await ExperienceModel.findOne({_id : id})
+    if(exp && exp.user_id == req.user._id){
+        ExperienceModel.deleteOne({_id : id})
+        .then((result)=>{
+            res.send(result)
+        }).catch((err)=>{
+            res.status(420).send(err)
+        })
+    }else{
+        res.status(420).send({'message' : 'Not owner'})
+    }
+   
 }
 
 module.exports = { createExperience , getAllExperiences , getExperienceById , updateExperience , removeExperience }
