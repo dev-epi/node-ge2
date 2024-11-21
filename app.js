@@ -21,6 +21,7 @@ server.get('/' , (req , res)=>{
 })
 
 require('./apis.routes')(server)
+require('./routes/auth.routes')(server)
 
 //4.lancement du serveur
 server.listen(process.env.PORT  , ()=>{
