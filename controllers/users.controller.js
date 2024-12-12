@@ -8,9 +8,10 @@ const createUser = (req, res) => {
         user.image = req.files.image
     }
 
-    user.save().then(() => {
-        res.send({ message: 'User added successfully' })
+    user.save().then((result) => {
+        res.send(result)
     }).catch((err) => {
+        console.log(err)
         res.status(410).send(err.errorResponse)
     })
 
@@ -54,5 +55,7 @@ const removeUser = (req, res) => {
         res.status(420).send(err)
     })
 }
+
+
 
 module.exports = { createUser, getAllUsers, getUserById, updateUser, removeUser }

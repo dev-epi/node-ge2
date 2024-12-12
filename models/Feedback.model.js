@@ -6,6 +6,8 @@ const schema = mongoose.Schema({
     rating : {type : Number , default : 0},
     user_id : {type : mongoose.Schema.Types.ObjectId , ref:UserModel},
     writer_id : {type : mongoose.Schema.Types.ObjectId , ref:UserModel}
+},{
+    timestamps : true
 })
 
 module.exports = mongoose.model('Feedback' , schema)

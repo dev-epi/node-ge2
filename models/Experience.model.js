@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const UserModel = require('./User.model')
 
 const schema = mongoose.Schema({
     title : {type : String ,required :true},
@@ -7,7 +6,7 @@ const schema = mongoose.Schema({
     start_date : Date,
     end_date : Date,
     description : String,
-    user_id : {type : mongoose.Schema.Types.ObjectId , ref:UserModel}
+    user_id : {type : mongoose.Schema.Types.ObjectId , ref:'User'}
 })
 
 module.exports = mongoose.model('Experience' , schema)
