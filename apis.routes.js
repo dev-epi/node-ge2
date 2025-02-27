@@ -21,8 +21,11 @@ module.exports = (server) => {
     server.post('/create-experience', verifyToken, expController.createExperience)
     server.put('/update-experience/:id', verifyToken, expController.updateExperience)
     server.delete('/remove-experience/:id', verifyToken, expController.removeExperience)
-    server.get('/search-experiences', expController.search)
-
+    server.get('/search-experiences/:text', expController.search)
+    server.get('/pagination/experiences/:page/:nb_rows' , expController.getAllWithPagination)
+   server.get('/user_experiences' , expController.getUserWithExperiences)
+   
+   
     server.get('/skills', skillsController.getAll)
     server.get('/skills/:x', skillsController.getById)
     server.post('/create-skills', skillsController.create)

@@ -66,25 +66,56 @@ const removeExperience = async (req, res) => {
 const search = async (req, res) => {
 
     let experiences = await ExperienceModel.find({
-        $or : [
-            { 
-                description: { $regex: 'sites', $options: 'i' }
-            } , {
-                 title: { $regex: 'react', $options: 'i' }
-                }
-            ]
+        $or: [
+            {
+                description: { $regex: req.params.text, $options: 'i' }
+            }, {
+                title: { $regex: req.params.text, $options: 'i' }
+            }
+        ]
     })
-
-    let userIds = experiences.map(exp=>exp.user_id)
+    let userIds = experiences.map(exp => exp.user_id)
     //$nin : not in
     //$not
-    let users = await UserModel.find({_id : {$in : userIds}})
+    let users = await UserModel.find({ _id: { $in: userIds } })
     // let users = await UserModel.find({isAdmin : {$not : true}})
-
     res.send(users)
 }
 
+const getAllWithPagination = async (req, res) => {
+    let nb_rows = req.params.nb_rows
+    let page = req.params.page
+    let skipNB = nb_rows * (page - 1)
+
+    let experiences = await ExperienceModel.find().sort({ title: -1 }).limit(nb_rows).skip(skipNB)
+    let companies = await ExperienceModel.distinct('company')
+    let nb_experiences = await ExperienceModel.countDocuments()
+    res.send({ experiences, companies, nb: nb_experiences })
+}
+
+const getUserWithExperiences = async (req, res) => {
+    let users = await UserModel.find();
+    let data = []
+
+    
+    console.log('start fetching')
+    await Promise.all(users.map(async (user) => {
+        let experiences = await ExperienceModel.find({ user_id: user._id })
+        console.log('map')
+        data.push({ user, experiences })
+    })
+    )
+    console.log('finish')
+    res.send(data)
+
+    
 
 
 
-module.exports = { search, createExperience, getAllExperiences, getExperienceById, updateExperience, removeExperience }
+
+
+  
+
+}
+
+module.exports = { getUserWithExperiences, getAllWithPagination, search, createExperience, getAllExperiences, getExperienceById, updateExperience, removeExperience }

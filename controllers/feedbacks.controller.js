@@ -13,8 +13,6 @@ const create = (req, res) => {
 }
 const getAll = async (req, res) => {
     try{
-
- 
         // $gte >= , $gt > , $lte <= , $lt <
         // $in 
         //$regexp : '' , $options : 'i'

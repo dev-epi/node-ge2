@@ -18,7 +18,7 @@ const createUser = (req, res) => {
 
 }
 const getAllUsers = async (req, res) => {
-    console.log(req.user)
+
     let result = await UserModel.find().populate('skills')
     res.send(result)
 }
