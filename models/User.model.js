@@ -15,17 +15,17 @@ const schema = mongoose.Schema({
    
     password : String,
     skills: [{type : mongoose.Schema.Types.ObjectId , ref : SkillModel}],
-   
+                                  
     supervisorId : {type : mongoose.Schema.Types.ObjectId , ref : 'User'},
     resetKey : String,
     resetTimeout : Date
 })
 
-schema.pre('save' , async function(){
+/* schema.pre('save' , async function(){
     console.log('before saving' , this)
     let key = await bcrypt.genSalt(10)
     this.password = await bcrypt.hash(this.password, key)
-}) 
+}) */ 
 schema.post('find' , function(){
     
 })

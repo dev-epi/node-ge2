@@ -50,8 +50,11 @@ exports.login = async (req, res) => {
     try {
         let user = await UserModel.findOne({ email: req.body.email })
         if (!user) {
-            res.status(422).send({ message: 'Invalid Credentials' })
+            res.status(450).send({ message: 'Invalid Email Address' })
         } else {
+
+            console.log(user.password)
+            console.log(req.body.password)
             let compare = await bcrypt.compare(req.body.password, user.password)
             if (compare) {
                 let token = await jwt.sign(

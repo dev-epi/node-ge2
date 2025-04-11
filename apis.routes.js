@@ -15,6 +15,7 @@ module.exports = (server) => {
     server.post('/create-user', uploadMiddleware, userController.createUser)
     server.put('/update-user/:id', userController.updateUser)
     server.delete('/remove-user/:id', userController.removeUser)
+    server.get('/auth', verifyToken , userController.getAuth)
 
     server.get('/experiences', expController.getAllExperiences)
     server.get('/experience/:x', expController.getExperienceById)

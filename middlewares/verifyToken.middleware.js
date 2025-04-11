@@ -3,7 +3,7 @@ exports.verifyToken = (req, res, next) => {
 
     var token = req.headers["x-access-token"] || req.headers['authorization'];
     if (!token) {
-        return res.status(403).send({ 'forbidden': "A token is required for authentication" });
+        return res.status(413).send({ 'forbidden': "A token is required for authentication" });
     }
     if (req.headers['authorization']) {
         token = token.replace(/^Bearer\s+/, "");

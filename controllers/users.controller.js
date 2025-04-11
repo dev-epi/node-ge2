@@ -38,6 +38,7 @@ const getUserById = async (req, res) => {
 const updateUser = async(req, res) => {
     let id = req.params.id
     try{
+        console.log(req.body)
        let result =await UserModel.updateOne({_id : id} ,req.body)
        res.send(result)
     }catch(err){
@@ -57,5 +58,15 @@ const removeUser = (req, res) => {
 }
 
 
+const getAuth = async(req,res)=>{
+    try {
+        let data = await UserModel.findOne({ _id: req.user._id})
+        .populate('skills')
+        res.send(data)
+    } catch (err) {
+        res.status(420).send(err)
+    }
+}
 
-module.exports = { createUser, getAllUsers, getUserById, updateUser, removeUser }
+
+module.exports = { createUser, getAllUsers, getUserById, updateUser, removeUser , getAuth}
