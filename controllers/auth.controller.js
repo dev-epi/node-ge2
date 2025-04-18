@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 const uuid = require('uuid')
 exports.register = (req, res) => {
 
+    console.lo
     UserModel.findOne({ email: req.body.email })
         .then((user) => {
             if (user) {
@@ -48,6 +49,7 @@ exports.register2 = async (req, res) => {
 
 exports.login = async (req, res) => {
     try {
+        console.log('a' , req.body)
         let user = await UserModel.findOne({ email: req.body.email })
         if (!user) {
             res.status(450).send({ message: 'Invalid Email Address' })
